@@ -14,19 +14,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ✅ Step 1: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ✅ Step 2: Setup Python
       - name: Set up Python 3.8
         uses: actions/setup-python@v5
         with:
           python-version: '3.8'
 
+      # ✅ Step 3: Install schemachange
       - name: Install schemachange
         run: |
           pip install --upgrade pip
           pip install schemachange
 
+      # ✅ Step 4: Safe debug check (verifies secrets exist)
+      - name: Debug secrets (safe)
+        run: |
+          echo "Checking environment variables..."
+          echo "Account present? $(if [ -n \"$SF_ACCOUNT\" ]; then echo Yes; else echo No; fi)"
+          echo "Username present? $(if [ -n \"$SF_USERNAME\" ]; then echo Yes; else echo No; fi)"
+        env:
+          SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
+          SF_USERNAME: ${{ secrets.SF_USERNAME }}
+
+      # ✅ Step 5: Dynamically create connections.toml
       - name: Create schemachange connections.toml
         env:
           SF_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
@@ -48,6 +62,7 @@ jobs:
           schema = "${SF_SCHEMA}"
           EOF
 
+      # ✅ Step 6: Run schemachange (modern syntax)
       - name: Run schemachange deployment
         run: |
-          schemachange -f migrations -c connections.toml -a default --create-change-history-table
+          schemachange -f migrations -c connections.toml --create-change-history-table
