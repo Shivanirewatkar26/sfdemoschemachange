@@ -1,8 +1,0 @@
-[connections.default]
-account = "xy12345.east-us-2.azure"
-user = "SREEBHASREENIVAS"
-password = "September@7203"
-role = "SYSADMIN"
-warehouse = "COMPUTE_WH"
-database = "DEMO_SOURCE_CONTROL"
-schema = "SCHEMACHANGE_PROD"
