@@ -55,6 +55,9 @@ jobs:
           SF_SCHEMA: ${{ secrets.SF_SCHEMA }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
         run: |
+          CHANGE_HISTORY_TABLE="${SF_DATABASE}.${SF_SCHEMA}.CHANGE_HISTORY_${ENV}"
+          echo "Using change history table: $CHANGE_HISTORY_TABLE"
+          
           echo "Running schemachange for environment: $ENV"
           schemachange -f $GITHUB_WORKSPACE/migrations \
                        -a $SF_ACCOUNT \
@@ -62,6 +65,6 @@ jobs:
                        -r $SF_ROLE \
                        -w $SF_WAREHOUSE \
                        -d $SF_DATABASE \
-                       -c $SF_DATABASE.$SF_SCHEMA.CHANGE_HISTORY \
+                       -c $CHANGE_HISTORY_TABLE \
                        --create-change-history-table \
                        --vars '{"ENV": "'"$ENV"'"}'
