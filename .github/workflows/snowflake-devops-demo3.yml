@@ -31,8 +31,8 @@ jobs:
           echo "Branch: $GITHUB_REF_NAME"
           if [[ "$GITHUB_REF_NAME" == "main" ]]; then
             echo "ENV=PRD" >> $GITHUB_ENV
-          elif [[ "$GITHUB_REF_NAME" == "test" ]]; then
-            echo "ENV=TST" >> $GITHUB_ENV
+          elif [[ "$GITHUB_REF_NAME" == "develop" ]]; then
+            echo "ENV=DEV" >> $GITHUB_ENV
           else
             echo "ENV=DEV" >> $GITHUB_ENV
           fi
