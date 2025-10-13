@@ -32,7 +32,7 @@ jobs:
           if [[ "$GITHUB_REF_NAME" == "main" ]]; then
             echo "ENV=PRD" >> $GITHUB_ENV
           elif [[ "$GITHUB_REF_NAME" == "develop" ]]; then
-            echo "ENV=TST" >> $GITHUB_ENV
+            echo "ENV=DEV" >> $GITHUB_ENV
           else
             echo "ENV=DEV" >> $GITHUB_ENV
           fi
